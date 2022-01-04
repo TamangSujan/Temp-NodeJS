@@ -1,0 +1,18 @@
+/*
+    Globals Variable:
+    These are the variables that can be access
+    from any file.
+
+    __dirname : path to current directory
+    __filename : file name with file path
+    require : function to use modules (CommonJS)
+    module : info about currrent module (file)
+    process : infor about new env where the program is being executed
+*/
+
+console.log(__dirname)
+var count = 0
+setInterval(()=>{
+    count += 1
+    console.log(count)
+}, 1000)

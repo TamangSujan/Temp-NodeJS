@@ -1,0 +1,138 @@
+/*
+    Built-in modules
+    OS - Interacting with OS and Server
+    PATH
+    FS
+    HTTP
+*/
+
+//Operating System
+
+const os = require('os')
+
+//Info about current user
+const user = os.userInfo()
+console.log(user)
+
+//Methods returs the system uptime in seconds
+console.log(`System UpTime: ${os.uptime()}`)
+
+const currentOS = {
+    name: os.type(),
+    release: os.release(),
+    totalMem: os.totalmem(),
+    freeMem: os.freemem()
+}
+
+console.log(currentOS)
+
+//Path
+
+const path = require('path')
+
+/*
+    Separator
+    It is essential to know platform
+    specific separator.
+    Linux:  /
+    Window: \  
+*/
+console.log(path.sep)
+
+/*
+    Join
+    This will remove extra separator
+*/
+const filePath = path.join('/Content','Folder','Test.txt')
+console.log(filePath)
+
+//Base Name: File Name only
+const base = path.basename(filePath)
+console.log(base)
+
+/*
+    Absolute path
+*/
+const absolute = path.resolve(__dirname, 'Content', 'Folder', 'Test.txt')
+console.log(absolute)
+
+//Files System
+//If we instantiate object with file name
+//Then it only give acces to that part
+const {readFileSync, writeFileSync} = require('fs')
+
+const first = readFileSync('./Content/First.txt','utf8')
+const second = readFileSync('./Content/Second.txt','utf8')
+/*
+    ReadfileSync will read all the file and return it with string format 
+*/
+
+console.log(first,second)
+
+/*
+    WriteFileSync will write file with given name on location
+    with given string, If file doesn't exist then it will create new file
+    If already exist then it will be overwritten
+
+    But if we want to append then we need to pass object
+    paramter flag: 'a' as a third parameter
+*/
+
+    writeFileSync('./Content/Created.txt',`Hello, I have been created by writeFileSync and added ${first},${second}`,{flag:'a'})
+
+/*
+    readFileSync is a synchronous read mode
+    means it is single threaded and it is not
+    good for web deployment as other task also
+    need to be done.
+    One thing to note, it doesn't need call back
+    function as response.send() so this function
+    will never be called and never be end and eventually
+    time out.
+    
+    readFile is aasynchronous read mode where
+    file can be readed at any time whenever CPU 
+    is idle or its get its turn.
+*/
+
+const {readFile, writeFile, writeFileSync} = require('fs')
+
+//Syntax : readFile(Path, CallBackFunction(Error, Result))
+readFile('./Content/First.txt',(err,result)=>{
+    if(err){
+        console.log(err)
+        return
+    }
+    console.log(result)
+})
+/*
+    If we dont add utf encoding value then we will get
+    Buffer result as number array so we need to provide
+    second parameter as utf format
+*/
+readFile('./Content/First.txt','utf8',(err,result)=>{
+    if(err){
+        console.log(err)
+        return
+    }
+    console.log(result)
+
+    const first = result
+    readFile('./Content/Second.txt','utf8',(err,result)=>{
+        if(err){
+            console.log(err)
+            return
+        }
+        console.log(result)
+        const second = result
+
+        //Writing After Reading
+        writeFileSync('./Content/AsyncWrite.txt',`Result: ${first},${second}`,(err,result)=>{
+            if(err){
+                console.log(err)
+                return
+            }
+            console.log(result)
+        })
+    })
+})

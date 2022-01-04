@@ -1,0 +1,17 @@
+/*
+    Modules
+    These are the classes files like java that have its own
+    methods, variables to be used.
+
+    It is encapsulated code (ony minimum)
+    Every file in NodeJS is module
+    */
+const secret = 'Super Secret'
+const Nira = 'Nira'
+
+const sayHi = (name)=>{
+    console.log(`Hey, ${name}!`)
+}
+
+sayHi('Sujan')
+sayHi(Nira)

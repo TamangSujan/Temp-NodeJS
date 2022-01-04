@@ -1,0 +1,1 @@
+Hello, I have been created by writeFileSync and added Hello this is second text file.Hello, I have been created by writeFileSync and added Hello this is first text file.,Hello this is second text file.

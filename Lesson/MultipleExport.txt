@@ -1,0 +1,23 @@
+//Launcher
+
+const multipleExport = require('./MultipleExport')
+
+console.log(multipleExport)
+console.log(multipleExport.items[0])
+console.log(multipleExport.singlePerson.name)
+
+//MultipleExport file
+/*
+    const items = [...]
+    module.exports = {items}
+    is same as below code
+*/
+module.exports.items = ['Item_1','Item_2']
+
+//Object Type
+const person = {
+    name: 'Bob'
+}
+
+module.exports.singlePerson = person
+

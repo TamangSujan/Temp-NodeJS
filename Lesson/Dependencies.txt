@@ -1,0 +1,12 @@
+/*
+    Using dependencies modules
+*/
+
+const lodash = require('lodash')
+
+const items = [1,[2,[3,[4]]]]
+
+//Lodash can spilt multi-arrya into flat array
+const newItems = lodash.flattenDeep(items)
+console.log(items)
+console.log(newItems)

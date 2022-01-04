@@ -1,0 +1,13 @@
+const http = require('http')
+
+const server = http.createServer((request, response)=>{
+    if(request.url === '/'){
+        response.end("Welcome to our home page!")
+    }else if(request.url==='/about'){
+        response.end("This is about page")
+    }else{
+        response.end("Error 404! Page not found!")
+    }
+})
+
+server.listen(8080)
