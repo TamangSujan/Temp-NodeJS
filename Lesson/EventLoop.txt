@@ -1,0 +1,5 @@
+console.log("First Task")
+setTimeout(function(){
+    console.log("Second Task")
+},0)
+console.log("Third Task")

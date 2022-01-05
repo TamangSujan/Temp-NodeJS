@@ -1,0 +1,25 @@
+const http = require('http')
+//Dont Run, it will be too slow
+const server = http.createServer((request, response)=>{
+    if(request.url === '/'){
+        response.end("Welcome to our home page!")
+    }else if(request.url==='/about'){
+        /*
+        Blocking, It is important to make asynchronous
+        If we have a code that takes long time then even if we open
+        on new tab then that new tab will have to wait for the
+        blocking part to be finished and only then that tab will get resources
+        */for(let i=0; i<1000; i++){
+            for(let j=0; j<1000; j++){
+                console.log(`${i},${j}`)
+            }
+        }
+        response.end("This is about page")
+    }else{
+        response.end("Error 404! Page not found!")
+    }
+})
+
+server.listen(8080,()=>{
+    console.log("Server listening on port 8080...")
+})

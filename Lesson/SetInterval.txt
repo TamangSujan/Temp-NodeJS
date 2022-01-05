@@ -1,0 +1,7 @@
+console.log("First Task")
+//It is asynchronous like setTimeOut but it keeps on invoking or stays alive based on given time.
+//To kill process we have to manually kill it. 
+setInterval(function(){
+    console.log("Second Task")
+},2000)
+console.log("Third Task")
