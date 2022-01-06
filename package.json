@@ -4,8 +4,7 @@
   "description": "",
   "main": "App.js",
   "dependencies": {
-    "jquery": "^3.6.0",
-    "lodash": "^4.17.21"
+    "express": "^4.17.2"
   },
   "scripts": {
     "start": "nodemon App.js"
