@@ -1,0 +1,23 @@
+const res = require('express/lib/response');
+const http = require('http')
+const server = http.createServer((request, response)=>{
+    //request.method : GET means that user is trying to get resources
+    console.log(request.method);
+    //request.url : It will give the url after the website name
+    const url = request.url;
+    console.log(url);
+    //Status Code: 200 -> Response Successful
+    if(url === '/'){
+        response.writeHead(200, {"Content-Type":"text/html"})
+        response.write('<h1>Home Page</h1>');
+    }else if(url === '/about'){
+        response.writeHead(200, {"Content-Type":"text/html"})
+        response.write('<h1>About Page</h1>');
+    }else{
+        response.writeHead(404, {"Content-Type":"text/html"})
+        response.write('<h1>Error Page! 404</h1>');
+    }
+    response.end()
+})
+
+server.listen(8080)
