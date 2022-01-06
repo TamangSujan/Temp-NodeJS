@@ -1,0 +1,26 @@
+const http = require('http')
+const fileSystem = require('fs')
+const {createReadStream} = require('fs')
+/*
+const stream_p = createReadStream('./Content/BigFile.txt', {encoding: 'utf-8', highWaterMark: 90000})
+stream_p.on('data', result=>{
+    console.log(result);
+})
+*/
+http.createServer((request, response)=>{
+    /*
+    If we look on below code then it will transfer 1.3MB file as a whole which
+    is not good on data transfer over network
+
+    const text = fileSystem.readFileSync('./Content/BigFile.txt','utf8')
+    response.end(text)
+
+    Instead we should send by chunks
+    */
+   const fileStream = fileSystem.createReadStream('./Content/BigFile.txt')
+   fileStream.on('open', ()=>{
+       //It is pushing from ReadStream to WriteStream, like sending water from a pipe
+       fileStream.pipe(response)
+   })
+   fileStream.on('error', (err)=>{console.log(err);})
+}).listen(8080)

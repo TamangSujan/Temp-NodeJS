@@ -1,0 +1,20 @@
+const {createReadStream} = require('fs')
+
+//Reading file in stream
+const stream = createReadStream('./Content/BigFile.txt', {highWaterMark: 90000})
+//Invoking event, data stands for giving data in chunks (in bytes),
+// and giving on one parameter callback function. Max Chunk size 65536, 64KB
+stream.on('data', (result)=>{
+    console.log(result)
+})
+/*
+    Above if we leave like this then we get byte value and size is 64KB by default
+    If we pass parameter as object with flag:
+    {highWaterMark: 90000} then instead of 65536 it will take 90000 bytes as a chunk
+    {encoding: 'utf-8'} the it will convert into english value.
+    */
+
+const stream_p = createReadStream('./Content/BigFile.txt', {encoding: 'utf-8', highWaterMark: 90000})
+stream_p.on('data', result=>{
+    console.log(result);
+})

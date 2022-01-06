@@ -1,0 +1,25 @@
+const events = require('events')
+const eventEmitter = new events()
+
+//To setup event we use on
+eventEmitter.on('Response', (name, id)=>{
+    console.log(`Data Recieved of ${name} having id ${id}`);
+})
+
+eventEmitter.on('Response', ()=>{
+    console.log('Some other logic');
+})
+
+//To fire event we use emit
+eventEmitter.emit('Response','John', 34)
+
+/*
+    Event creating sever events are emitting
+*/
+const http = require('http')
+const server = http.createServer()
+server.on('request',(request, response)=>{
+    response.end("Hello")
+})
+
+server.listen(8080)
