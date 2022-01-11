@@ -1,0 +1,33 @@
+const express = require('express')
+const app = express()
+const logger = require('./Logger')
+const authorize = require('./Authorize')
+
+//To put logger function in all route which is get then we need to use use function of express
+//app.use(logger) //For any route
+
+//app.use('/api',logger)
+//Any route after /api
+
+app.use([authorize, logger])
+
+app.get('/', (request, response)=>{
+    response.send('Home Page')
+})
+
+app.get('/about', (request, response)=>{
+    response.send('About Page')
+})
+
+app.get('/api/products', (request, response)=>{
+    console.log(request.user)
+    response.send('Products Page')
+})
+
+app.get('/api/items', (request, response)=>{
+    response.send('Items Page')
+})
+
+app.listen(5000, ()=>{
+    console.log("Server is listening to port 5000....");
+})

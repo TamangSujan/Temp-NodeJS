@@ -1,0 +1,23 @@
+const express = require('express')
+const res = require('express/lib/response')
+const app = express()
+
+const path = require('path')
+
+//By using this all those static error of file link to other file link will be removed
+//It will seek to that location whether there is file or not by pointing towards the folder
+app.use(express.static('./2. Express/Files'))
+//static files are those files where server doesn't have to change it
+
+//Simply by this configuration same error will be as HTTP like file location not found
+/*app.get('/',(request, response)=>{
+    response.sendFile(path.resolve(__dirname, './2. Express/Files/index.html'))
+})*/
+
+app.all('*', (request, response)=>{
+    response.status(404).send("Error 404! Page not found")
+})
+
+app.listen(5000, ()=>{
+    console.log('Server is listening on port 5000...')
+})

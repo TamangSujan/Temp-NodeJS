@@ -1,0 +1,43 @@
+const express = require('express')
+const app = express()
+let {people} = require('./Data')
+
+//static assets
+app.use(express.static('./2. Express/Methods-Public'))
+
+//We need middleware to parse the form that has benn posted
+app.use(express.urlencoded({extended: false}))
+
+app.get('/api/people', (request, response)=>{
+    response.status(200).json({success: true,data: people})
+})
+//We have to handle JSON data if we are transfering jso type from client
+app.use(express.json())
+//Even if url is same post ad get are different methods
+app.post('/api/people', (request, response)=>{
+    const {name} = request.body
+    if(!name){
+        return response.status(400).json({success:false, msg:'Please provide name value'})
+    }
+    response.status(201).json({success: true, person:name})
+})
+
+app.post('/api/postman/people', (request, response)=>{
+    const {name} = request.body
+    if(!name){
+        return response.status(400).json({success: false, msg: 'Please provide name value'})
+    }
+    response.status(201).json({success: true, data: [...people, name]})
+})
+
+app.post('/login', (request, response)=>{
+    const {name} = request.body
+    if(name){
+        return response.status(200).send(`Welcome, ${name}`)
+    }
+    response.status(401).send('Please, provide credentials!')
+})
+
+app.listen(5000, ()=>{
+    console.log("Server is listening to port 5000....");
+})

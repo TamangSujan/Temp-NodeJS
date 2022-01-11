@@ -1,0 +1,57 @@
+const express = require('express')
+const app = express()
+const {products} = require('./Data')
+//[] is array and {} is object
+app.get('/',(request, response)=>{
+    //response.json(products)
+    response.send('<h1>Home Page</h1><a href="api/products">Products</a>')
+})
+
+app.get('/api/products',(request, response)=>{
+    //It will return every parameter of products but we can map and send back what we want
+    //response.json(products)
+    const newProducts = products.map((product)=>{
+        /*
+            products objetc is send itself to map with value parameter name as product
+            since it is an array with object, we can filter with new object and return by making new array
+            of objects
+        */    const {id, name, image} = product
+        return {id, name, image}
+    })
+    response.json(newProducts)
+})
+
+/*
+//This is harcoding, can be useful for few search but for 200+ it is useless
+app.get('/api/products/1',(request, response)=>{
+    //It will return every parameter of products but we can map and send back what we want
+    //response.json(products)
+    const singleProduct = products.find((product)=>product.id===1)
+    response.json(singleProduct)
+})
+*/
+
+//So we can add another symbol which can be use as a variable using ':' which we call route parameter
+app.get('/api/products/:ProductID',(request, response)=>{
+    /*It will return every parameter of products but we can map and send back what we want
+        response.json(products)
+        /api/products/:ProductID this is a parameter which will be created in request.param
+        as a object
+    */
+   const {ProductID} = request.params
+   //Above code is string so we have to keep inside Number() function
+    const singleProduct = products.find((product)=>product.id===Number(ProductID))
+    if(!singleProduct){
+        return response.status(404).send('Product doesn\'t exists')
+    }
+    response.json(singleProduct)
+})
+
+//We can also use multiple route param values
+app.get('/api/products/:ProductID/reviews/:Review',(request, response)=>{
+    response.send('Review will be posted soon')
+})
+
+app.listen(5000, ()=>{
+    console.log('Server is listening on port 5000...')
+})
